@@ -11,9 +11,9 @@ public interface TipoItemMapper {
     
     public List<TipoItem> getTiposItems();
     
-    public TipoItem getTipoItem(int id);
+    public TipoItem getTipoItem(@Param("tipoitemid")int id);
     
-    public void insertarTipoItem(TipoItem ti); 
+    public void insertarTipoItem(@Param("ti")TipoItem ti); 
     
     public void addTipoItem(String des);
 

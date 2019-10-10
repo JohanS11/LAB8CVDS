@@ -22,7 +22,7 @@ public class MyBATISTipoItemDAO implements TipoItemDAO{
 			TipoitemMapper.insertarTipoItem(ti);
 		}
 		catch(org.apache.ibatis.exceptions.PersistenceException e){
-			throw new PersistenceException("Error al registrar el item "+ti.toString(),e);
+			throw new PersistenceException("Error al registrar el tipo del item "+ti.toString(),e);
 		}        
 	}
 	@Override
@@ -31,7 +31,7 @@ public class MyBATISTipoItemDAO implements TipoItemDAO{
 			return TipoitemMapper.getTipoItem(id);
 		}
 		catch(org.apache.ibatis.exceptions.PersistenceException e){
-			throw new PersistenceException("Error al consultar el Tipo del item "+id,e);
+			throw new PersistenceException("Error al consultar el tipo del item "+id,e);
 		}
 	}
 

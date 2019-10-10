@@ -29,6 +29,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemMapper;
+import edu.eci.cvds.sampleprj.dao.mybatis.mappers.TipoItemMapper;
 import edu.eci.cvds.samples.entities.Item;
 import edu.eci.cvds.samples.entities.TipoItem;
 
@@ -69,7 +70,8 @@ public class MyBatisExample {
         SqlSession sqlss = sessionfact.openSession();
 
         
-        //Crear el mapper y usarlo: 
+        /**
+         * //Crear el mapper y usarlo: 
         ClienteMapper cm=sqlss.getMapper(ClienteMapper.class);  
         //CONSULTAR TODOS LOS CLIENTES
         System.out.println(cm.consultarClientes());
@@ -87,7 +89,12 @@ public class MyBatisExample {
         //IMPRIMIR TODOS LOS ITEMS
         System.out.println(cmItem.consultarItems());
         //IMPRIMIR UN SOLO ITEM
-        System.out.println(cmItem.consultarItem(4));
+        System.out.println(cmItem.consultarItem(4)); */
+        TipoItemMapper cmti= sqlss.getMapper(TipoItemMapper.class);  
+        System.out.println(cmti.getTipoItem(1));
+        TipoItem tipo = new TipoItem (69,"peli");
+        cmti.insertarTipoItem(tipo);
+        
         
         sqlss.commit();
         
