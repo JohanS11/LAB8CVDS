@@ -27,11 +27,19 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Module;
+
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemMapper;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.TipoItemMapper;
 import edu.eci.cvds.samples.entities.Item;
 import edu.eci.cvds.samples.entities.TipoItem;
+import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
+import edu.eci.cvds.samples.services.ServiciosAlquiler;
+import edu.eci.cvds.samples.services.ServiciosAlquilerFactory;
+import edu.eci.cvds.samples.services.impl.ServiciosAlquilerImpl;
 
 /**
  *
@@ -58,6 +66,9 @@ public class MyBatisExample {
         }
         return sqlSessionFactory;
     }
+    
+    
+    
 
     /**
      * Programa principal de ejempo de uso de MyBATIS
@@ -69,6 +80,7 @@ public class MyBatisExample {
 
         SqlSession sqlss = sessionfact.openSession();
 
+        
         
         /**
          * //Crear el mapper y usarlo: 
@@ -89,17 +101,26 @@ public class MyBatisExample {
         //IMPRIMIR TODOS LOS ITEMS
         System.out.println(cmItem.consultarItems());
         //IMPRIMIR UN SOLO ITEM
-        System.out.println(cmItem.consultarItem(4)); */
+        System.out.println(cmItem.consultarItem(4)); 
         TipoItemMapper cmti= sqlss.getMapper(TipoItemMapper.class);  
         System.out.println(cmti.getTipoItem(1));
         TipoItem tipo = new TipoItem (69,"peli");
-        cmti.insertarTipoItem(tipo);
+        cmti.insertarTipoItem(tipo);*/
         
         
         sqlss.commit();
         
         
         sqlss.close();
+        
+        ServiciosAlquilerFactory factory = ServiciosAlquilerFactory.getInstance();
+        ServiciosAlquiler implementacion = factory.getServiciosAlquiler();
+        try {
+			System.out.println(implementacion.consultarItem(1).toString());
+		} catch (ExcepcionServiciosAlquiler e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
         
         

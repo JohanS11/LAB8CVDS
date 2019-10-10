@@ -3,6 +3,7 @@ package edu.eci.cvds.sampleprj.dao.mybatis.mappers;
 import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.exceptions.PersistenceException;
 
 import edu.eci.cvds.samples.entities.Cliente;
 
@@ -12,7 +13,7 @@ import edu.eci.cvds.samples.entities.Cliente;
  */
 public interface ClienteMapper {
     
-    public Cliente consultarCliente(@Param("idcli") int id); 
+    public Cliente consultarCliente(@Param("idcli") long id) throws PersistenceException; 
     
     /**
      * Registrar un nuevo item rentado asociado al cliente identificado

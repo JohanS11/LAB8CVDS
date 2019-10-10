@@ -22,13 +22,15 @@ public class ServiciosAlquilerFactory {
 
    private static Optional<Injector> optInjector;
 
-   private Injector myBatisInjector(String env, String pathResource) {
+   private static Injector myBatisInjector(String env, String pathResource) {
        return createInjector(new XMLMyBatisModule() {
            @Override
            protected void initialize() {
                setEnvironmentId(env);
                setClassPathResource(pathResource);
                bind(ItemDAO.class).to(MyBATISItemDAO.class);
+               bind(ClienteDAO.class).to(MyBATISClienteDAO.class);
+               bind(TipoItemDAO.class).to(MyBATISTipoItemDAO.class);
                bind(ServiciosAlquiler.class).to(ServiciosAlquilerImpl.class);
            }
        });
