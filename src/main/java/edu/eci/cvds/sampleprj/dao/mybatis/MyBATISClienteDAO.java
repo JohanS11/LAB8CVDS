@@ -1,6 +1,7 @@
 package edu.eci.cvds.sampleprj.dao.mybatis;
 
 import com.google.inject.Inject;
+import java.time.LocalDate;
 
 import com.google.inject.Singleton;
 
@@ -13,41 +14,50 @@ import edu.eci.cvds.samples.entities.TipoItem;
 import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
 
 import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Date;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 
 public class MyBATISClienteDAO implements ClienteDAO{
 
-  @Inject
-  private ClienteMapper ClienteMapper;    
+	@Inject
+	private ClienteMapper ClienteMapper;    
 
-  @Override
-  public void save(Cliente cli) throws PersistenceException{
-  try{
-	  
-	 ClienteMapper.AgregarCliente(cli);
-	 
-  }
-  catch(org.apache.ibatis.exceptions.PersistenceException e){
-      throw new PersistenceException("Error al registrar un cliente "+cli.toString(),e);
-  }        
+	@Override
+	public void save(Cliente cli) throws PersistenceException{
+		try{
 
-  }
+			ClienteMapper.AgregarCliente(cli);
 
-  @Override
-  public Cliente load(long id) throws ExcepcionServiciosAlquiler {
-	  Cliente cliente = null;
-	  try{
-		  cliente = ClienteMapper.consultarCliente(id);
-		  if (cliente == null) {
-			  throw new ExcepcionServiciosAlquiler("Error al consultar");
-		  }
-	  } catch(org.apache.ibatis.exceptions.PersistenceException e){
-		  throw new ExcepcionServiciosAlquiler("Error al consultar el item "+id,e);
-	  }
-	  return cliente;
+		}
+		catch(org.apache.ibatis.exceptions.PersistenceException e){
+			throw new PersistenceException("Error al registrar un cliente "+cli.toString(),e);
+		}        
 
-  }
+	}
 
+	@Override
+	public Cliente load(long id) throws ExcepcionServiciosAlquiler {
+		Cliente cliente = null;
+		try{
+			cliente = ClienteMapper.consultarCliente(id);
+			if (cliente == null) {
+				throw new ExcepcionServiciosAlquiler("Error al consultar");
+			}
+		} catch(org.apache.ibatis.exceptions.PersistenceException e){
+			throw new ExcepcionServiciosAlquiler("Error al consultar el item "+id,e);
+		}
+		return cliente;
+
+	}
+
+	@Override
+	public void agregarItemRentado(long docu, Item item, Date fechaini,Date fechafin) {
+		try{
+			ClienteMapper.agregarItemRentadoACliente(docu, item.getId(), fechaini,fechafin); 
+		}
+		catch(org.apache.ibatis.exceptions.PersistenceException e){
+			throw new PersistenceException("Error al registrar el item al cliente "+docu,e);
+		} 
+	}
 }

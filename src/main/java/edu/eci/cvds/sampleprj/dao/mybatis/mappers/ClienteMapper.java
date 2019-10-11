@@ -23,7 +23,7 @@ public interface ClienteMapper {
      * @param fechainicio
      * @param fechafin 
      */
-    public void agregarItemRentadoACliente(@Param("idir")int id, 
+    public void agregarItemRentadoACliente(@Param("docu")long id, 
     		@Param("iditem") int idit, 
     		@Param("fechai") Date fechainicio,
     		@Param("fechaf") Date fechafin);

@@ -15,6 +15,7 @@ import edu.eci.cvds.samples.entities.TipoItem;
 import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
 import edu.eci.cvds.samples.services.ServiciosAlquiler;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Singleton
@@ -59,7 +60,6 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
            throw new ExcepcionServiciosAlquiler("Error al consultar el item "+id,ex);
        }
    }
-
    @Override
    public List<Item> consultarItemsDisponibles() {
        throw new UnsupportedOperationException("Not supported yet.");
@@ -82,7 +82,12 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
 
    @Override
    public void registrarAlquilerCliente(Date date, long docu, Item item, int numdias) throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+	   try {
+		   LocalDate fechafin = date.toLocalDate().plusDays(numdias);
+		   clienteDAO.agregarItemRentado(docu, item, date, Date.valueOf(fechafin));
+       } catch (PersistenceException ex) {
+           throw new ExcepcionServiciosAlquiler("Error al registrar el item en el cliente "+docu,ex);
+       }
    }
 
    @Override

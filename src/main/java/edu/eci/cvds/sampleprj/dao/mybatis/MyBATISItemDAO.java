@@ -4,9 +4,12 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import edu.eci.cvds.sampleprj.dao.ItemDAO;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
+import edu.eci.cvds.samples.entities.Cliente;
 import edu.eci.cvds.samples.entities.Item;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemMapper;
 import edu.eci.cvds.samples.entities.TipoItem;
+import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
+
 import java.sql.SQLException;
 
 import org.apache.ibatis.exceptions.PersistenceException;
@@ -28,15 +31,18 @@ public class MyBATISItemDAO implements ItemDAO{
 	}
 
 	@Override
-	public Item load(int id) throws PersistenceException {
+	public Item load(int id) throws ExcepcionServiciosAlquiler{
+		Item item = null;
 		try{
-			return itemMapper.consultarItem(id);
+			 item= itemMapper.consultarItem(id);
+			 if (item == null) {
+				  throw new ExcepcionServiciosAlquiler("Error al consultar");
+			  }
 		}
 		catch(org.apache.ibatis.exceptions.PersistenceException e){
 			throw new PersistenceException("Error al consultar el item "+id,e);
 		}
-
-
+		return item;
 	}
 
 }

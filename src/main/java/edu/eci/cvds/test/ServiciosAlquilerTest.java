@@ -1,10 +1,12 @@
 package edu.eci.cvds.test;
 
+import java.sql.Date;
 import java.util.ArrayList;
+
 import java.util.List;
 
 import com.google.inject.Inject;
-import edu.eci.cvds.samples.entities.Cliente;
+import edu.eci.cvds.samples.entities.*;
 import edu.eci.cvds.samples.entities.ItemRentado;
 import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
 import edu.eci.cvds.samples.services.ServiciosAlquiler;
@@ -16,33 +18,57 @@ import org.junit.Assert;
 
 public class ServiciosAlquilerTest {
 
-    @Inject
-    private SqlSession sqlSession;
+	@Inject
+	private SqlSession sqlSession;
 
-    ServiciosAlquiler serviciosAlquiler;
+	ServiciosAlquiler serviciosAlquiler;
 
-    public ServiciosAlquilerTest() {
-        serviciosAlquiler = ServiciosAlquilerFactory.getInstance().getServiciosAlquilerTesting();
-    }
+	public ServiciosAlquilerTest() {
+		serviciosAlquiler = ServiciosAlquilerFactory.getInstance().getServiciosAlquilerTesting();
+	}
 
-    @Before
-    public void setUp() {
-    }
+	@Before
+	public void setUp() {
+	}
 
-    @Test
-    public void emptyDB() {
-        for(int i = 0; i < 100; i += 10) {
-            boolean r = false;
-            try {
-                Cliente cliente = serviciosAlquiler.consultarCliente(9);
-            } catch(ExcepcionServiciosAlquiler e) {
-            	
-                r = true;
-            } catch(IndexOutOfBoundsException e) {
-                r = true;
-            }
-            // Validate no Client was found;
-            Assert.assertTrue(r);
-        };
-    }
+	@Test
+	public void emptyDB() {
+		for(int i = 0; i < 100; i += 10) {
+			boolean r = false;
+			try {
+				Cliente cliente = serviciosAlquiler.consultarCliente(6969);
+			} catch(ExcepcionServiciosAlquiler e) {
+
+				r = true;
+			} catch(IndexOutOfBoundsException e) {
+				r = true;
+			}
+			// Validate no Client was found;
+			Assert.assertTrue(r);
+		}
+	}
+	@Test
+	public void noItemFound() {
+		boolean r = false;
+		try {
+			Item item = serviciosAlquiler.consultarItem(8);
+		} catch(ExcepcionServiciosAlquiler e) {
+			r = true;
+		} catch(IndexOutOfBoundsException e) {
+			r = true;
+		}
+		// Validate no Client was found;
+		Assert.assertTrue(r);
+	}
+	@Test
+	public void insertarAlquilerAlCliente() {
+		boolean esValido = false;
+		try {
+			serviciosAlquiler.registrarAlquilerCliente(Date.valueOf("2017-0-01") , docu, item, numdias);
+			esValido = true;
+		} catch (ExcepcionServiciosAlquiler e) {
+			esValido = false;
+		}
+		Assert.assertTrue(esValido);
+	} 
 }
