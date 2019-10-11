@@ -2,6 +2,8 @@ package edu.eci.cvds.sampleprj.dao.mybatis;
 
 import com.google.inject.Inject;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.inject.Singleton;
 
@@ -10,6 +12,7 @@ import edu.eci.cvds.sampleprj.dao.ItemDAO;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
 import edu.eci.cvds.samples.entities.Cliente;
 import edu.eci.cvds.samples.entities.Item;
+import edu.eci.cvds.samples.entities.ItemRentado;
 import edu.eci.cvds.samples.entities.TipoItem;
 import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
 
@@ -59,5 +62,26 @@ public class MyBATISClienteDAO implements ClienteDAO{
 		catch(org.apache.ibatis.exceptions.PersistenceException e){
 			throw new PersistenceException("Error al registrar el item al cliente "+docu,e);
 		} 
+	}
+	
+	@Override
+	public List<Cliente> consultarClientes() throws ExcepcionServiciosAlquiler {
+		
+		List<Cliente> clientes = new ArrayList<Cliente>();
+		try{
+			clientes = ClienteMapper.consultarClientes();
+	
+		} catch(org.apache.ibatis.exceptions.PersistenceException e){
+			throw new ExcepcionServiciosAlquiler("Error al consultar los clientes ",e);
+		}
+		return clientes;
+
+	}
+	
+	@Override
+	public List<ItemRentado> consultarItemsRentados(long id) throws ExcepcionServiciosAlquiler{
+		Cliente cliente = load(id);
+		return cliente.getRentados();
+		
 	}
 }

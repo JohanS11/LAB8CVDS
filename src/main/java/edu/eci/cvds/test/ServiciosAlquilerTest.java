@@ -64,7 +64,8 @@ public class ServiciosAlquilerTest {
 	public void insertarAlquilerAlCliente() {
 		boolean esValido = false;
 		try {
-			serviciosAlquiler.registrarAlquilerCliente(Date.valueOf("2017-0-01") , docu, item, numdias);
+			Item item = serviciosAlquiler.consultarItem(12021);
+			serviciosAlquiler.registrarAlquilerCliente(Date.valueOf("2019-02-01") , 999, item, 5);
 			esValido = true;
 		} catch (ExcepcionServiciosAlquiler e) {
 			esValido = false;

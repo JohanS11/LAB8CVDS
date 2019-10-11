@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:p="http://primefaces.org/ui"
+xmlns:f="http://java.sun.com/jsf/core">
+
+ <h:head></h:head>
+ 	<h:body>
+		<h:form id="cliente">
+			<p:dataTable id="clientes" var="cliente" value="#{servicios.clientes}"
+                         paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         rows="10">
+             	<f:facet name="header">
+                    Clientes registrados actualmente:
+                </f:facet>
+                <p:column headerText="Nombre Cliente">
+                    <h:outputText value="#{cliente.nombre}" />
+                </p:column>
+
+                <p:column headerText="Documento">
+                    <h:outputText value="#{cliente.documento}" binding="#{superDocumento}" />
+                </p:column>
+
+                <p:column headerText="Celular">
+                    <h:outputText value="#{cliente.telefono}" />
+                </p:column>
+
+                <p:column headerText="Dirección">
+                    <h:outputText value="#{cliente.direccion}" />
+                </p:column>
+
+                <p:column headerText="Correo">
+                    <h:outputText value="#{cliente.email}" />
+                </p:column>
+                <p:column headerText="Items Rentados">
+                    <p:link outcome="registroalquiler" value="VER">
+                    	<f:param name="documento" value="#{superDocumento.value}" />
+					</p:link>
+                </p:column>
+
+            </p:dataTable>
+ 			<!-- <p:inputText id="intento" binding="#{intento}"></p:inputText> -->
+ 			<!-- <p:commandButton update="guess_form" actionListener="#{User.guess(intento.value)}" value="Jugar"></p:commandButton> -->
+ 			<!-- <p:commandButton update="guess_form" actionListener="#{User.restart}" value="Reiniciar"></p:commandButton> -->
+ 			<!-- <p:messages id="mensaje" showDetail="true" autoUpdate="true" closable="true" globalOnly="true"/> -->
+ 		</h:form> 
+ 	</h:body>
+</html>

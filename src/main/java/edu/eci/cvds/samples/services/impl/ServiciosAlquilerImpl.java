@@ -16,6 +16,7 @@ import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
 import edu.eci.cvds.samples.services.ServiciosAlquiler;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Singleton
@@ -44,14 +45,21 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
 
    @Override
    public List<ItemRentado> consultarItemsCliente(long idcliente) throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+	   try {
+           return clienteDAO.consultarItemsRentados(idcliente);
+       } catch (PersistenceException ex) {
+           throw new ExcepcionServiciosAlquiler("Error al consultar los clientes ",ex);
+       }
    }
 
    @Override
    public List<Cliente> consultarClientes() throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+	    try {
+	           return clienteDAO.consultarClientes();
+	       } catch (PersistenceException ex) {
+	           throw new ExcepcionServiciosAlquiler("Error al consultar los clientes ",ex);
+	       }
    }
-
    @Override
    public Item consultarItem(int id) throws ExcepcionServiciosAlquiler {
        try {
@@ -112,7 +120,6 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
 		   throw new ExcepcionServiciosAlquiler("Error al insertar el item "+i.getId());
 	   }
    }
-
    @Override
    public void vetarCliente(long docu, boolean estado) throws ExcepcionServiciosAlquiler {
        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
