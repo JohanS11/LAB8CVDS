@@ -64,7 +64,7 @@
 </insert>
 
 <insert parameterType="map" id="agregarCliente" >
-	INSERT INTO VI_CLIENTS
+	INSERT INTO VI_CLIENTES
 	VALUES(#{cli.documento},#{cli.nombre},#{cli.telefono},#{cli.direccion},#{cli.email},#{cli.vetado});
 </insert>
 

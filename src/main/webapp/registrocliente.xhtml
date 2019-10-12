@@ -6,12 +6,36 @@ xmlns:f="http://java.sun.com/jsf/core">
 
  <h:head></h:head>
  	<h:body>
+ 		<h:form id="registrarCliente">
+ 			<p><p:outputLabel value="Bienvenido, rellena la siguiente información para crear un nuevo usuario"> </p:outputLabel></p>
+ 			<h3>Nombre</h3>
+			<span class="ui-float-label">
+				<p:inputText id="float-input" binding="#{nombreCliente}" />
+			</span>
+			<h3>Documento</h3>
+			<span class="ui-float-label">
+				<p:inputText id="documentoCliente" binding="#{documentoCliente}" />
+			</span>
+			<h3>Telefono</h3>
+			<span class="ui-float-label">
+				<p:inputText id="telefonoCliente" binding="#{telefonoCliente}" />
+			</span>
+			<h3>Direccion</h3>
+			<span class="ui-float-label">
+				<p:inputText id="direccionCliente" binding="#{direccionCliente}" />
+			</span>
+			<h3>Correo</h3>
+			<span class="ui-float-label">
+				<p:inputText id="correoCliente" binding="#{correoCliente}" />
+			</span>
+ 			<p><p:commandButton update="cliente" actionListener="#{servicios.registrarCliente(nombreCliente.value,documentoCliente.value,telefonoCliente.value,direccionCliente.value,correoCliente.value)}" value="Registrar"></p:commandButton></p>
+ 		</h:form>
 		<h:form id="cliente">
 			<p:dataTable id="clientes" var="cliente" value="#{servicios.clientes}"
                          paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                          rows="10">
              	<f:facet name="header">
-                    Clientes registrados actualmente:
+                    Clientes actualmente registrados
                 </f:facet>
                 <p:column headerText="Nombre Cliente">
                     <h:outputText value="#{cliente.nombre}" />
@@ -33,7 +57,7 @@ xmlns:f="http://java.sun.com/jsf/core">
                     <h:outputText value="#{cliente.email}" />
                 </p:column>
                 <p:column headerText="Items Rentados">
-                    <p:link outcome="registroalquiler" value="VER">
+                    <p:link outcome="registroalquiler" value="Seleccionar">
                     	<f:param name="documento" value="#{superDocumento.value}" />
 					</p:link>
                 </p:column>

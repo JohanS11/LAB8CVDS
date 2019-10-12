@@ -34,6 +34,6 @@ public interface ClienteMapper {
      */
     public List<Cliente> consultarClientes();
     
-    public void AgregarCliente(@Param("cli")Cliente cli);
+    public void agregarCliente(@Param("cli")Cliente cli);
     
 }

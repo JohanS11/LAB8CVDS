@@ -28,9 +28,10 @@ public class MyBATISClienteDAO implements ClienteDAO{
 
 	@Override
 	public void save(Cliente cli) throws PersistenceException{
+		
 		try{
 
-			ClienteMapper.AgregarCliente(cli);
+			ClienteMapper.agregarCliente(cli);
 
 		}
 		catch(org.apache.ibatis.exceptions.PersistenceException e){

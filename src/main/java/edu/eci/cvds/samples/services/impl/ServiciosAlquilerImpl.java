@@ -17,17 +17,33 @@ import edu.eci.cvds.samples.services.ServiciosAlquiler;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Singleton
 public class ServiciosAlquilerImpl implements ServiciosAlquiler {
 
-   @Inject
-   private ItemDAO itemDAO;
-   @Inject
-   private TipoItemDAO tipoItemDAO;
+	private final Map<Long,Cliente> clientes;
+	private final Map<Integer,Item> itemsDisponibles;
+	private final Map<Integer,ItemRentado> itemsrentados;
+	private final Map<Integer,TipoItem> tipositems;
+
+	private final Map<Integer,Long> mapaPrestamosPorIdCliente;
+	@Inject
+	private ItemDAO itemDAO;
+	@Inject
+	private TipoItemDAO tipoItemDAO;
    @Inject
    private ClienteDAO clienteDAO;
+   
+   public ServiciosAlquilerImpl() {
+       clientes = new HashMap<>();
+       itemsDisponibles = new HashMap<>();
+       itemsrentados = new HashMap<>();
+       tipositems = new HashMap<>();
+       mapaPrestamosPorIdCliente=new HashMap<>();
+   }
  
    @Override
    public int valorMultaRetrasoxDia(int itemId) {
@@ -100,7 +116,7 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
 
    @Override
    public void registrarCliente(Cliente c) throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+	   clienteDAO.save(c);
    }
 
    @Override
